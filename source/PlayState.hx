@@ -1,5 +1,6 @@
 package;
 
+import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -9,16 +10,30 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import haxe.Json;
+import lime.app.Application;
 import lime.utils.Assets;
+#if desktop
+import Discord.DiscordClient;
+#end
 
 class PlayState extends FlxState
 {
 	var cookies_clicked:Int = 0;
 	var cookie:FlxSprite = null;
 	var click_text:FlxText;
+	var ver_text:FlxText;
 
 	override public function create()
 	{
+		#if desktop
+		DiscordClient.initialize();
+
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordClient.shutdown();
+		});
+		#end
+
 		super.create();
 		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic("assets/images/backround v1.png");
 		bg.antialiasing = true;
@@ -37,6 +52,9 @@ class PlayState extends FlxState
 		click_text.borderColor = 0xFF020000;
 		click_text.borderSize = 210.83;
 		add(click_text);
+
+		ver_text = new FlxText(21, 0, 0, Application.current.meta.get('version'), 30);
+		add(ver_text);
 
 		if (FlxG.save.data.cookies_clicked != cookies_clicked)
 			cookies_clicked = FlxG.save.data.cookies_clicked;
