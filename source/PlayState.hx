@@ -26,14 +26,8 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		#if desktop
-		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			DiscordClient.shutdown();
-		});
+		DiscordClient.changePresence("Cookie Clicker", "Playing The Game", null, true);
 		#end
-
 		super.create();
 		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic("assets/images/backround v1.png");
 		bg.antialiasing = true;
@@ -60,7 +54,7 @@ class PlayState extends FlxState
 		click_text.borderStyle = OUTLINE;
 		add(click_text);
 
-		ver_text = new FlxText(21, 0, 0, Application.current.meta.get('version'), 30);
+		ver_text = new FlxText(1032.65, 0, 0, Application.current.meta.get('version'), 30);
 		add(ver_text);
 
 		if (FlxG.save.data.cookies_clicked != cookies_clicked)
@@ -77,8 +71,14 @@ class PlayState extends FlxState
 			FlxG.save.data.cookies_clicked = cookies_clicked;
 			FlxG.save.flush();
 			trace("you have pressed " + cookies_clicked + " times");
-			FlxG.sound.play(("assets/sounds/click.ogg"), 1, false);
-			cookie.animation.play('press');
+			if (MainOptionsState.clicksoundenable == 1)
+			{
+				FlxG.sound.play(("assets/sounds/click.ogg"), 1, false);
+			}
+			if (MainOptionsState.clickanimenable == 1)
+			{
+				cookie.animation.play('press');
+			}
 		}
 		if (FlxG.mouse.overlaps(cookie) && FlxG.mouse.justPressed)
 		{
@@ -86,8 +86,14 @@ class PlayState extends FlxState
 			FlxG.save.data.cookies_clicked = cookies_clicked;
 			FlxG.save.flush();
 			trace("you have pressed " + cookies_clicked + " times");
-			FlxG.sound.play(("assets/sounds/click.ogg"), 1, false);
-			cookie.animation.play('press');
+			if (MainOptionsState.clicksoundenable == 1)
+			{
+				FlxG.sound.play(("assets/sounds/click.ogg"), 1, false);
+			}
+			if (MainOptionsState.clickanimenable == 1)
+			{
+				cookie.animation.play('press');
+			}
 		}
 	}
 }
