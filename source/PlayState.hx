@@ -19,14 +19,16 @@ import Discord.DiscordClient;
 class PlayState extends FlxState
 {
 	var cookies_clicked:Int = 0;
+	var cookie_level:Int = 0;
 	var cookie:FlxSprite = null;
+	var cookiem:FlxSprite = null;
 	var click_text:FlxText;
 	var ver_text:FlxText;
 
 	override public function create()
 	{
 		#if desktop
-		DiscordClient.changePresence("Cookie Clicker", "Playing The Game", null, true);
+		DiscordClient.changePresence("Cookie Clicker", "Playing The Game With " + cookies_clicked + " Cookies At Lvl " + cookie_level, null, true);
 		#end
 		super.create();
 		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic("assets/images/backround v1.png");
@@ -59,12 +61,31 @@ class PlayState extends FlxState
 
 		if (FlxG.save.data.cookies_clicked != cookies_clicked)
 			cookies_clicked = FlxG.save.data.cookies_clicked;
+
+		if (FlxG.save.data.cookie_level != cookie_level)
+			cookie_level = FlxG.save.data.cookie_level;
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
 		click_text.text = "" + cookies_clicked; // why do i have to make it a black string at first bruh
+		if (cookie_level == 1)
+		{
+			cookie.kill();
+
+			var cookie_anim_m = FlxAtlasFrames.fromSparrow("assets/images/m&m cookie.png", "assets/images/m&m cookie.xml");
+
+			cookiem = new FlxSprite(0, 0);
+			cookiem.frames = cookie_anim_m;
+			cookiem.animation.addByPrefix('idle', 'cookie static');
+			cookiem.animation.addByPrefix('press', 'cookie press', 54, false);
+			cookiem.animation.play('idle');
+			cookiem.antialiasing = true;
+			cookiem.screenCenter(XY);
+			cookiem.pixelPerfectPosition = true;
+			add(cookiem);
+		}
 		if (FlxG.keys.justPressed.E)
 		{
 			cookies_clicked += 1;
@@ -78,6 +99,7 @@ class PlayState extends FlxState
 			if (MainOptionsState.clickanimenable == 1)
 			{
 				cookie.animation.play('press');
+				cookiem.animation.play('press');
 			}
 		}
 		if (FlxG.mouse.overlaps(cookie) && FlxG.mouse.justPressed)
@@ -93,6 +115,11 @@ class PlayState extends FlxState
 			if (MainOptionsState.clickanimenable == 1)
 			{
 				cookie.animation.play('press');
+				cookiem.animation.play('press');
+			}
+			if (FlxG.keys.justPressed.L)
+			{
+				cookie_level += 1;
 			}
 		}
 	}
