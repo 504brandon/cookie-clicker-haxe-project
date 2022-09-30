@@ -30,7 +30,7 @@ class PlayState extends FlxState
 		cookie.screenCenter(XY);
 		add(cookie);
 
-		click_text = new FlxText(132S, 50, 0, "digga bye bye", 30);
+		click_text = new FlxText(132, 50, 0, "digga bye bye", 30);
 		click_text.pixelPerfectPosition = true;
 		click_text.borderColor = 0xFF020000;
 		click_text.borderSize = 210.83;
