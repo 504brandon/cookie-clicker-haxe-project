@@ -6,6 +6,7 @@ import flixel.FlxState;
 import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import haxe.Json;
 import lime.utils.Assets;
@@ -19,7 +20,7 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
-		var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic("assets/images/backround v1.png");
+		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic("assets/images/backround v1.png");
 		bg.antialiasing = true;
 		bg.screenCenter(XY);
 		bg.scale.set(1.3, 2);
@@ -28,9 +29,10 @@ class PlayState extends FlxState
 		cookie = new FlxSprite(0, 0).loadGraphic("assets/images/cookie.png");
 		cookie.antialiasing = true;
 		cookie.screenCenter(XY);
+		cookie.pixelPerfectPosition = true;
 		add(cookie);
 
-		click_text = new FlxText(132, 50, 0, "digga bye bye", 30);
+		click_text = new FlxText(601.2, 50, 0, "digga bye bye", 30);
 		click_text.pixelPerfectPosition = true;
 		click_text.borderColor = 0xFF020000;
 		click_text.borderSize = 210.83;
