@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxState;
 import flixel.FlxSubState;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -40,16 +41,23 @@ class PlayState extends FlxState
 		bg.scale.set(1.3, 2);
 		add(bg);
 
-		cookie = new FlxSprite(0, 0).loadGraphic("assets/images/cookie.png");
+		var cookie_anim = FlxAtlasFrames.fromSparrow("assets/images/cookie.png", "assets/images/cookie.xml");
+
+		cookie = new FlxSprite(0, 0);
+		cookie.frames = cookie_anim;
+		cookie.animation.addByPrefix('idle', 'cookie static');
+		cookie.animation.addByPrefix('press', 'cookie press', 54, false);
+		cookie.animation.play('idle');
 		cookie.antialiasing = true;
 		cookie.screenCenter(XY);
 		cookie.pixelPerfectPosition = true;
 		add(cookie);
 
-		click_text = new FlxText(601.2, 50, 0, "digga bye bye", 30);
+		click_text = new FlxText(-601.2, 50, 0, "digga bye bye", 30);
 		click_text.pixelPerfectPosition = true;
-		click_text.borderColor = 0xFF020000;
-		click_text.borderSize = 210.83;
+		click_text.borderColor = FlxColor.BLACK;
+		click_text.borderSize = 3;
+		click_text.borderStyle = OUTLINE;
 		add(click_text);
 
 		ver_text = new FlxText(21, 0, 0, Application.current.meta.get('version'), 30);
@@ -69,7 +77,8 @@ class PlayState extends FlxState
 			FlxG.save.data.cookies_clicked = cookies_clicked;
 			FlxG.save.flush();
 			trace("you have pressed " + cookies_clicked + " times");
-			FlxG.sound.playMusic(("assets/sounds/click.ogg"), 1, false);
+			FlxG.sound.play(("assets/sounds/click.ogg"), 1, false);
+			cookie.animation.play('press');
 		}
 		if (FlxG.mouse.overlaps(cookie) && FlxG.mouse.justPressed)
 		{
@@ -77,7 +86,8 @@ class PlayState extends FlxState
 			FlxG.save.data.cookies_clicked = cookies_clicked;
 			FlxG.save.flush();
 			trace("you have pressed " + cookies_clicked + " times");
-			FlxG.sound.playMusic(("assets/sounds/click.ogg"), 1, false);
+			FlxG.sound.play(("assets/sounds/click.ogg"), 1, false);
+			cookie.animation.play('press');
 		}
 	}
 }
