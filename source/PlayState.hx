@@ -85,8 +85,8 @@ class PlayState extends FlxState
 			cookiem.antialiasing = true;
 			cookiem.screenCenter(XY);
 			cookiem.pixelPerfectPosition = true;
-			add(cookiem);*/
-		}
+			add(cookiem);
+		}*/
 		if (FlxG.keys.justPressed.E)
 		{
 			cookies_clicked += 1;
