@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="mm cookie.png">
+	<!-- Created with Adobe Animate version 22.0.3.179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="cookie press0000" x="0" y="0" width="480" height="477"/>
+	<SubTexture name="cookie static0000" x="0" y="0" width="480" height="477"/>
+	<SubTexture name="cookie static0001" x="480" y="0" width="480" height="477"/>
+	<SubTexture name="cookie static0002" x="960" y="0" width="480" height="477"/>
+	<SubTexture name="cookie static0003" x="1440" y="0" width="480" height="477"/>
+	<SubTexture name="cookie static0004" x="0" y="477" width="480" height="477"/>
+	<SubTexture name="cookie static0005" x="480" y="477" width="480" height="477"/>
+	<SubTexture name="cookie static0006" x="960" y="477" width="480" height="477"/>
+</TextureAtlas>
